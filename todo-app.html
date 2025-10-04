@@ -20,7 +20,105 @@
             .dark-mode input, .dark-mode button {
                 background-color: #333;
                 color: #ffffff;
-                border: 1px solid #555;   
+                border: 1px solid #555;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            .container {
+                max-width: 600px;
+                margin: 50px auto;
+                padding: 20px;
+                background: white;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            h1 {    
+                text-align: center;
+            }
+            .input-section {
+                display: flex;
+                margin-bottom: 20px;
+            }
+            #taskInput {
+                flex: 1;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
+            #addTaskButton {
+                padding: 10px 20px;
+                margin-left: 10px;
+                font-size: 16px;
+                border: none;
+                background-color: #28a745;
+                color: white;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            #addTaskButton:hover {
+                background-color: #218838;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+            li {
+                padding: 10px;
+                background: #f9f9f9;
+                border-bottom: 1px solid #ddd;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            li:nth-child(odd) {
+                background: #efefef;
+            }
+            .delete-button {
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            .delete-button:hover {
+                background: #c82333;
+            }
+            *:focus {
+                outline: none;
+            }
+            *::-webkit-input-placeholder {
+                color: #999;
+            }
+            *:-ms-input-placeholder {
+                color: #999;
+            }
+            *::-ms-input-placeholder {
+                color: #999;
+            }
+            *::placeholder {
+                color: #999;
+            }
+            button {
+                transition: background-color 0.3s ease;
+            }
+            button:focus {
+                outline: none;
+            }
+            input:focus {
+                border-color: #007bff;
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            }
+            @media (max-width: 600px) {
+                .container {
+                    margin: 20px;
+                    padding: 10px;
+                }
+                #addTaskButton {
+                    padding: 10px;
+                    font-size: 14px;
+                }
             }
         </style>
         <body>
