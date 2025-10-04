@@ -190,6 +190,55 @@
                 }
             });
             window.addEventListener('beforeunload', saveTasks);
+            let darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+            }
+            function toggleDarkMode() {
+                var element = document.body;
+                element.classList.toggle("dark-mode");
+                localStorage.setItem('darkMode', element.classList.contains('dark-mode'));
+            }
+            let darkModeButton = document.querySelector('button[onclick="toggleDarkMode()"]');
+            darkModeButton.addEventListener('click', function() {
+                toggleDarkMode();
+            });
+            let editMode = false;
+            let currentEditItem = null;
+            taskList.addEventListener('click', function(e) {
+                if (e.target.tagName === 'LI' && !editMode) {
+                    editMode = true;
+                    currentEditItem = e.target;
+                    let currentText = currentEditItem.firstChild.textContent;
+                    let inputField = document.createElement('input');
+                    inputField.type = 'text';
+                    inputField.value = currentText;
+                    inputField.style.flex = '1';
+                    currentEditItem.firstChild.replaceWith(inputField);
+                    inputField.focus();
+                    inputField.addEventListener('keypress', function(event) {
+                        if (event.key === 'Enter') {
+                            finishEditing(inputField);
+                        }
+                    });
+                    inputField.addEventListener('blur', function() {
+                        finishEditing(inputField);
+                    });
+                }
+            });
+            function finishEditing(inputField) {
+                let newText = inputField.value.trim();
+                if (newText !== '') {
+                    let textNode = document.createTextNode(newText);
+                    inputField.replaceWith(textNode);
+                    saveTasks();
+                } else {
+                    currentEditItem.remove();
+                    saveTasks();
+                }
+                editMode = false;
+                currentEditItem = null;
+            }
 
         </script>
     </head>
