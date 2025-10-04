@@ -137,5 +137,32 @@
                 var element = document.body;
                 element.classList.toggle("dark-mode");
             }
+            let taskInput = document.getElementById('taskInput');
+            let addTaskButton = document.getElementById('addTaskButton');
+            let taskList = document.getElementById('taskList');
+            addTaskButton.addEventListener('click', function() {
+                let taskText = taskInput.value.trim();
+                if (taskText !== '') {
+                    let listItem = document.createElement('li');
+                    listItem.textContent = taskText;
+
+                    let deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'delete-button';
+                    deleteButton.addEventListener('click', function() {
+                        taskList.removeChild(listItem);
+                    });
+
+                    listItem.appendChild(deleteButton);
+                    taskList.appendChild(listItem);
+                    taskInput.value = '';
+                }
+            });
+            taskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addTaskButton.click();
+                }
+            });
+
         </script>
     </html>
