@@ -194,7 +194,7 @@
             if (darkMode) {
                 document.body.classList.add('dark-mode');
             }
-            function toggleDarkMode() {
+            function toggleDarkMode (){
                 var element = document.body;
                 element.classList.toggle("dark-mode");
                 localStorage.setItem('darkMode', element.classList.contains('dark-mode'));
@@ -205,8 +205,26 @@
             });
             darkModeButton.addEventListener('click', function() {
                 toggleDarkMode();
+                color = darkModeButton.style.color;
+                if (color === 'rgb(255, 255, 255)') {
+                    darkModeButton.style.color = 'black';
+                } else {
+                    darkModeButton.style.color = 'white';
+                }
+                color = darkModeButton.style.backgroundColor;
+                if (color === 'rgb(51, 51, 51)') {
+                    darkModeButton.style.backgroundColor = 'white';
+                } else {
+                    darkModeButton.style.backgroundColor = '#333';
+                }
+                color = title.style.color;
+                if (color === 'rgb(255, 255, 255)') {
+                    title.style.color = 'black';
+                } else {
+                    title.style.color = 'white';
+                }
             });
-            
+
             let editMode = false;
             let currentEditItem = null;
             taskList.addEventListener('click', function(e) {
@@ -270,7 +288,7 @@
             markTasksAsCompletedButton.addEventListener('click', markTasksAsCompleted);
             document.querySelector('.input-section').appendChild(markTasksAsCompletedButton);
 
-            function markTasksAsCompleted() {
+            function markTasksAsCompleted(button = markTasksAsCompleted) {
                 let tasks = [];
                 taskList.querySelectorAll('li').forEach(function(li) {
                     let taskText = li.firstChild.textContent;
@@ -289,6 +307,20 @@
                 }
             }
 
+            function saveTasks() {
+                let tasks = [];
+                taskList.querySelectorAll('li').forEach(function(li) {
+                    tasks.push(li.firstChild.textContent);
+                });
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
+            addTaskButton.addEventListener('click', saveTasks);
+            taskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveTasks();
+                }
+            });
+            window.addEventListener('beforeunload', saveTasks);
         </script>
     </head>
     </html>
