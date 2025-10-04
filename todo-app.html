@@ -21,6 +21,16 @@
                 color: #ffffff;
                 border: 1px solid #555;
             }
+            .dark-mode li {
+                background-color: #1e1e1e;
+                border-bottom: 1px solid #333;
+            }
+            .tile {
+                color: black;
+            }
+            .dark-mode .title {
+                color: white;
+            }
             * {
                 box-sizing: border-box;
             }
@@ -118,6 +128,23 @@
                     padding: 10px;
                     font-size: 14px;
                 }
+            }
+            .completed {
+                text-decoration: line-through;
+                color: gray;
+            }
+            #markTasksAsCompletedButton {
+                padding: 10px 20px;
+                margin-left: 10px;
+                font-size: 16px;
+                border: none;
+                background-color: #007bff;
+                color: white;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+            #markTasksAsCompletedButton:hover {
+                background-color: #0056b3;
             }
         </style>
         <body>
@@ -293,7 +320,7 @@
                 taskList.querySelectorAll('li').forEach(function(li) {
                     let taskText = li.firstChild.textContent;
                     if (li.classList.contains('completed')) {
-                        taskText = taskText.replace('✔️ ', '');
+                        taskText = taskText.replace('', '');
                     } else {
                         taskText = '✔️ ' + taskText;
                     }
@@ -301,11 +328,8 @@
                     li.firstChild.textContent = taskText;
                     li.classList.toggle('completed');
                 });
-                let markTasksAsCompletedButton = document.getElementById('markTasksAsCompletedButton');
-                if (markTasksAsCompletedButton) {
-                    markTasksAsCompletedButton.remove();
                 }
-            }
+                localStorage.setItem('tasks', JSON.stringify(tasks));
 
             function saveTasks() {
                 let tasks = [];
