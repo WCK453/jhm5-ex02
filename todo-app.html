@@ -272,6 +272,10 @@
                     li.firstChild.textContent = taskText;
                     li.classList.toggle('completed');
                 });
+                let markTasksAsCompletedButton = document.getElementById('markTasksAsCompletedButton');
+                if (markTasksAsCompletedButton) {
+                    markTasksAsCompletedButton.remove();
+                }
                 localStorage.setItem('tasks', JSON.stringify(tasks));
             }
 
