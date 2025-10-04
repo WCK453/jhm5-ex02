@@ -302,22 +302,20 @@
                 listItem.appendChild(deleteButton);
                 taskList.appendChild(listItem);
             });
-            addTaskButton.addEventListener('click', markTasksAsCompleted);
-            taskInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    markTasksAsCompleted();
-                }
-            });
-            markTasksAsCompletedButton = document.createElement('button');
-            markTasksAsCompletedButton.id = 'markTasksAsCompletedButton';
-            markTasksAsCompletedButton.textContent = 'Mark All as Completed';
-            markTasksAsCompletedButton.style.marginLeft = '10px';
-            markTasksAsCompletedButton.addEventListener('click', markTasksAsCompleted);
-            document.querySelector('.input-section').appendChild(markTasksAsCompletedButton);
-
-            function markTasksAsCompleted(button = markTasksAsCompleted) {
+        let checkboxButton = document.createElement('button');
+        checkboxButton.id = 'markTasksAsCompletedButton';
+        checkboxButton.textContent = 'checkbox';
+        if (checkboxButton.toggled === true) {
+            checkboxButton.style.backgroundColor = '#0056b3';
+        } else {
+            checkboxButton.style.backgroundColor = '#007bff';
+        }
+        document.querySelector('.input-section').appendChild(checkboxButton);
+        checkboxButton.addEventListener('click', checkbox);
+    
+            function checkbox(button = checkbox) {
                 let tasks = [];
-                taskList.querySelectorAll('li').forEach(function(li) {
+                taskList.querySelector('li').forEach(function(li) {
                     let taskText = li.firstChild.textContent;
                     if (li.classList.contains('completed')) {
                         taskText = taskText.replace('', '');
