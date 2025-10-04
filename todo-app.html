@@ -239,6 +239,41 @@
                 editMode = false;
                 currentEditItem = null;
             }
+            let savedTasksWithEdit = JSON.parse(localStorage.getItem('tasks')) || [];
+            savedTasksWithEdit.forEach(function(taskText) {
+                let listItem = document.createElement('li');
+                listItem.textContent = taskText;
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.className = 'delete-button';
+                deleteButton.addEventListener('click', function() {
+                    taskList.removeChild(listItem);
+                    saveTasks();
+                });
+                listItem.appendChild(deleteButton);
+                taskList.appendChild(listItem);
+            });
+            addTaskButton.addEventListener('click', markTasksAsCompleted);
+            taskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    markTasksAsCompleted();
+                }
+            });
+            function markTasksAsCompleted() {
+                let tasks = [];
+                taskList.querySelectorAll('li').forEach(function(li) {
+                    let taskText = li.firstChild.textContent;
+                    if (li.classList.contains('completed')) {
+                        taskText = taskText.replace('✔️ ', '');
+                    } else {
+                        taskText = '✔️ ' + taskText;
+                    }
+                    tasks.push(taskText);
+                    li.firstChild.textContent = taskText;
+                    li.classList.toggle('completed');
+                });
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
 
         </script>
     </head>
