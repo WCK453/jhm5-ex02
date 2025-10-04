@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="todo-app.css">
         <script src="todo-app.js" defer></script>
-        </head>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -163,6 +162,35 @@
                     addTaskButton.click();
                 }
             });
+            let savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            savedTasks.forEach(function(taskText) {
+                let listItem = document.createElement('li');
+                listItem.textContent = taskText;
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.className = 'delete-button';
+                deleteButton.addEventListener('click', function() {
+                    taskList.removeChild(listItem);
+                    saveTasks();
+                });
+                listItem.appendChild(deleteButton);
+                taskList.appendChild(listItem);
+            });
+            function saveTasks() {
+                let tasks = [];
+                taskList.querySelectorAll('li').forEach(function(li) {
+                    tasks.push(li.firstChild.textContent);
+                });
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+            }
+            addTaskButton.addEventListener('click', saveTasks);
+            taskInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveTasks();
+                }
+            });
+            window.addEventListener('beforeunload', saveTasks);
 
         </script>
+    </head>
     </html>
