@@ -292,6 +292,10 @@
             savedTasksWithEdit.forEach(function(taskText) {
                 let listItem = document.createElement('li');
                 listItem.textContent = taskText;
+                let checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.style.marginRight = '10px';
+                listItem.prepend(checkbox);
                 let deleteButton = document.createElement('button');
                 deleteButton.textContent = 'Delete';
                 deleteButton.className = 'delete-button';
@@ -301,32 +305,18 @@
                 });
                 listItem.appendChild(deleteButton);
                 taskList.appendChild(listItem);
-            });
-        let checkboxButton = document.createElement('button');
-        checkboxButton.id = 'markTasksAsCompletedButton';
-        checkboxButton.textContent = 'checkbox';
-        if (checkboxButton.toggled === true) {
-            checkboxButton.style.backgroundColor = '#0056b3';
-        } else {
-            checkboxButton.style.backgroundColor = '#007bff';
-        }
-        document.querySelector('.input-section').appendChild(checkboxButton);
-        checkboxButton.addEventListener('click', checkbox);
-    
-            function checkbox(button = checkbox) {
-                let tasks = [];
-                taskList.querySelector('li').forEach(function(li) {
-                    let taskText = li.firstChild.textContent;
-                    if (li.classList.contains('completed')) {
-                        taskText = taskText.replace('', '');
+                checkbox.addEventListener('change', function() {
+                    if (checkbox.checked) {
+                        listItem.classList.add('completed');
                     } else {
-                        taskText = '✔️ ' + taskText;
+                        listItem.classList.remove('completed');
                     }
-                    tasks.push(taskText);
-                    li.firstChild.textContent = taskText;
-                    li.classList.toggle('completed');
                 });
-                }
+            });
+            let tasks = [];
+            taskList.querySelectorAll('li').forEach(function(li) {
+                tasks.push(li.firstChild.textContent);
+            });
                 localStorage.setItem('tasks', JSON.stringify(tasks));
 
             function saveTasks() {
